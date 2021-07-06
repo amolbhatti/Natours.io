@@ -34,6 +34,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // implimenting cors
 app.use(cors());
+// for pre-flight
+app.options('*', cors());
 // https setter
 app.use(
   helmet({
