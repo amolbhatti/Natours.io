@@ -6,7 +6,7 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: `http://localhost:3000/api/v1/user/login`,
+      url: `/api/v1/user/login`,
       data: { email, password },
     });
 
@@ -23,7 +23,7 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   try {
-    const res = await axios.get('http://localhost:3000/api/v1/user/logout');
+    const res = await axios.get('/api/v1/user/logout');
     if (res.status === 200) {
       location.reload(true);
     }
