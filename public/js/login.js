@@ -9,7 +9,6 @@ export const login = async (email, password) => {
       url: `http://localhost:3000/api/v1/user/login`,
       data: { email, password },
     });
-    console.log(res.status);
 
     if (res.status === 200) {
       showAlert('success', 'Logged in successfully');

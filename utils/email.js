@@ -25,7 +25,6 @@ module.exports = class Email {
   }
 
   async send(template, subject) {
-    console.log(template, subject);
     //1) render html for email based on pug template
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
