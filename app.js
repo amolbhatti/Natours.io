@@ -22,6 +22,8 @@ const AppError = require('./utils/appError');
 dotenv.config({ path: './config.env' }); // enviroment variable setup
 const app = express();
 
+app.enable('trust proxy');
+
 // 1)template engine
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
