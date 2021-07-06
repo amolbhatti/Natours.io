@@ -9,6 +9,7 @@ const mongooSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookie = require('cookie-parser');
+const cors = require('cors');
 const compression = require('compression');
 const tourRouter = require('./routes/tourRouter');
 const userRouter = require('./routes/userRoutes');
@@ -31,7 +32,8 @@ app.set('views', path.join(__dirname, 'views'));
 // 2) middleware
 // serving static file
 app.use(express.static(path.join(__dirname, 'public')));
-
+// implimenting cors
+app.use(cors());
 // https setter
 app.use(
   helmet({
