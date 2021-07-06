@@ -9,6 +9,7 @@ const mongooSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookie = require('cookie-parser');
+const compression = require('compression');
 const tourRouter = require('./routes/tourRouter');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRouter');
@@ -47,7 +48,7 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
-
+app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 app.use(cookie());
 
