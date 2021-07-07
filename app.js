@@ -10,6 +10,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookie = require('cookie-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const compression = require('compression');
 const tourRouter = require('./routes/tourRouter');
 const userRouter = require('./routes/userRoutes');
@@ -60,7 +61,7 @@ app.use(compression());
 
 app.post(
   '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
+  bodyParser.raw({ type: 'application/json' }),
   stripeWebhook
 );
 app.use(express.json({ limit: '10kb' }));

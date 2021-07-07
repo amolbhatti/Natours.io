@@ -55,7 +55,7 @@ const createBooking = async (session) => {
 };
 
 module.exports.stripeWebhook = (req, res, next) => {
-  const signature = request.headers['stripe-signature'];
+  const signature = req.headers['stripe-signature'];
   let event;
   try {
     event = stripe.webhooks.constructEvent(
