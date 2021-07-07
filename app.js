@@ -16,7 +16,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRouter');
 const bookingRouter = require('./routes/bookingRouter');
 const viewRouter = require('./routes/viewRouter');
-
+const stripeWebhook = require('./controler/bookingControler');
 const globalErrorHandler = require('./controler/errorControler');
 const AppError = require('./utils/appError');
 
@@ -52,19 +52,28 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many request  from this IP, please try again in an hour',
 });
-
+//limit the no of request
 app.use('/api', limiter);
 app.use(compression());
+
+// Stripe send post data in raw formet
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  stripeWebhook
+);
 app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookie());
 
 // Data sanitize against NoSql query injection
 app.use(mongooSanitize());
 
-// data sanatize against XSS (html injection)
+// Data sanatize against XSS (html injection)
 app.use(xss());
 
-// prevent parameter pollution (duplicacy)
+// Prevent parameter pollution (duplicacy)
 app.use(
   hpp({
     whitelist: [
@@ -78,7 +87,7 @@ app.use(
   })
 );
 
-// 2)router middleware
+//ROUTER MIDDLEWARE
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/user', userRouter);
@@ -88,10 +97,10 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find  ${req.originalUrl}`, 404));
 });
 
-//ERROR MIDDLEWARE
+//ERROR HANDLE MIDDLEWARE
 app.use(globalErrorHandler);
 
-// 4) database connection
+//Database connection
 const DB = process.env.DB_URL.replace('<PASSWORD>', process.env.DB_PASSWORD);
 mongoose
   .connect(DB, {
