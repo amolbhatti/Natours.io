@@ -16,7 +16,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRouter');
 const bookingRouter = require('./routes/bookingRouter');
 const viewRouter = require('./routes/viewRouter');
-const stripeWebhook = require('./controler/bookingControler');
+const { stripeWebhook } = require('./controler/bookingControler');
 const globalErrorHandler = require('./controler/errorControler');
 const AppError = require('./utils/appError');
 
