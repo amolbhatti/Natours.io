@@ -4,6 +4,7 @@ import { displayMap } from './mapbox';
 import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alert';
 
 const mapBox = document.getElementById('map');
 const form = document.querySelector('.form--login');
@@ -11,7 +12,11 @@ const formUserPasswords = document.querySelector('.form-user-password');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const bookBtn = document.querySelector('#book-tour');
+const alertMessage = document.querySelector('body').dataset.alert;
 
+if (alertMessage) {
+  showAlert('success', alertMessage, 20);
+}
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
   displayMap(locations);

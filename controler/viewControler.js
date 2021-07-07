@@ -33,3 +33,11 @@ module.exports.getMyTours = catchAsync(async (req, res, next) => {
   const tours = await Tour.find({ _id: { $in: tourIds } });
   res.status(200).render('overview', { title: 'My Tours', tours });
 });
+
+module.exports.alerts = (req, res, next) => {
+  const { alert } = req.query;
+  if (alert == 'booking') {
+    res.locals.alert = 'Your booking was successful';
+  }
+  next();
+};

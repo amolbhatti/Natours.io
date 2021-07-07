@@ -5,11 +5,13 @@ const {
   signin,
   AboutMe,
   getMyTours,
+  alerts,
 } = require('../controler/viewControler');
 
 const { isLoggedIn, protect } = require('../controler/authControler');
 
 const router = express.Router();
+router.use(alerts);
 router.get('/', isLoggedIn, getOverview);
 router.get('/tours/:slug', isLoggedIn, getTour);
 router.get('/login', isLoggedIn, signin);
