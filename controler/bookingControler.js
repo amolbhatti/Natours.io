@@ -49,7 +49,7 @@ module.exports.getCheckout = catchAsync(async (req, res) => {
 
 const createBooking = async (session) => {
   const tour = session.client_reference_id;
-  const user = (await User.find({ email: session.customer_email })).id;
+  const user = (await User.findOne({ email: session.customer_email })).id;
   const price = session.display_items[0].amount / 100;
   await Booking.create({ tour, user, price });
 };
@@ -64,7 +64,7 @@ module.exports.stripeWebhook = (req, res, next) => {
       process.env.STRIPE_WEHOOK_SECRET
     );
   } catch (err) {
-    return response.status(400).send(`Webhook Error: ${err.message}`);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   if (event.type === 'checkout.session.completed') {
